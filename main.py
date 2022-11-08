@@ -8,6 +8,7 @@ from xgboost import XGBRFClassifier
 from sklearn.metrics import accuracy_score
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from sklearn.preprocessing import StandardScaler
 
 app = FastAPI(title="DDos classifier",
               description="DDos classifier", version="0.1")
@@ -46,13 +47,15 @@ async def classify(model_parameters: ModelParameters):
     model = XGBRFClassifier()
     model.load_model(
         "/home/royer/Documents/AD2022/ddosClassifier-api/model/model_xgboost99.txt")
-
-    test = [[1, 144, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 0, 144, 0, 0.0, 0.0]]
+    test = pd.DataFrame([model_parameters.dict()])
+    # class 0
+    #test = [[1, 144, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 0, 144, 0, 0.0, 0.0]]
+    # class 1
+    #test = [[29, 4118, 4.959919999999999, 4.959919999999999, 0.0, 4.959919999999999,4.959919999999999, 4.959919999999999, 29, 0, 4118, 0, 5.645251999999999, 0.0]]
+    # class 2
+    #test = [[24, 3696, 4.881948, 4.881948, 0.0, 4.881948, 4.881948,4.881948, 24, 0, 3696, 0, 4.711233999999999, 0.0]]
     test2 = pd.DataFrame(test, columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
                                         'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'SrcRate', 'DstRate'], dtype=float)
-    #prediction = model.predict(model_parameters)
     prediction = model.predict(test2)
     print(prediction)
-    #json_compatible_item_data = jsonable_encoder(prediction)
-    # return JSONResponse(content=json_compatible_item_data)
     return {"class": prediction.tolist()}
