@@ -1,0 +1,54 @@
+{
+    "Dur":0.0, 
+    "SrcBytes": 144,
+    "DstBytes": 0,
+    "TotBytes": 144,
+    "SrcPkts": 1,
+    "DstPkts": 0,
+    "TotPkts": 1,
+    "SrcRate": 0.0,
+    "DstRate": 0.0,
+    "Rate": 0.0,
+    "Min": 0.0,
+    "Max": 0.0,
+    "Sum": 0.0,
+    "Mean": 0.0,
+    "StdDev": 0.0
+    "model": 3
+}
+{
+    "Dur":4.996719000000001, 
+    "SrcBytes": 4402,
+    "DstBytes": 0,
+    "TotBytes": 4402,
+    "SrcPkts": 31,
+    "DstPkts": 0,
+    "TotPkts": 31,
+    "SrcRate": 6.00394,
+    "DstRate": 0.0,
+    "Rate": 6.00394,
+    "Min": 4.996719000000001,
+    "Max": 4.996719000000001,
+    "Sum": 4.996719000000001,
+    "Mean": 4.996719000000001,
+    "StdDev": 0.0,
+    "model": 3
+}
+{
+    "Dur":4.899005000000001, 
+    "SrcBytes": 4004,
+    "DstBytes": 0,
+    "TotBytes": 4004,
+    "SrcPkts": 26,
+    "DstPkts": 0,
+    "TotPkts": 26,
+    "SrcRate": 5.103077,
+    "DstRate": 0.0,
+    "Rate": 5.103077,
+    "Min": 4.899005000000001,
+    "Max": 4.899005000000001,
+    "Sum": 4.899005000000001,
+    "Mean": 4.899005000000001,
+    "StdDev": 0.0,
+    "model": 3
+}
