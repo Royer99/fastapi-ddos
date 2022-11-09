@@ -9,20 +9,22 @@ app = FastAPI(title="DDos classifier",
 
 
 class ModelParameters(BaseModel):
-    param1: float
-    param2: float
-    param3: float
-    param4: float
-    param5: float
-    param6: float
-    param7: float
-    param8: float
-    param9: float
-    param10: float
-    param11: float
-    param12: float
-    param13: float
-    param14: float
+    Dur: float
+    SrcBytes: float
+    DstBytes: float
+    TotBytes: float
+    SrcPkts: float
+    DstPkts: float
+    TotPkts: float
+    SrcRate: float
+    DstRate: float
+    Rate: float
+    Min: float
+    Max: float
+    Sum: float
+    Mean: float
+    StdDev: float
+    model: int
 
 
 model = None
@@ -40,19 +42,19 @@ async def root():
 async def classify(model_parameters: ModelParameters):
 
     absolute_path = os.path.dirname(__file__)
-    relative_path = "model/model_xgboost99.txt"
+    if model_parameters.param15 == 1:
+        relative_path = "model/model_xgboost99.txt"
+    elif model_parameters.param15 == 2:
+        relative_path = "model/model_xgboost99_semifinal.txt"
+    elif model_parameters.param15 == 3:
+        relative_path = "model/model_xgboost99_semifinal_rate.txt"
+
     full_path = os.path.join(absolute_path, relative_path)
     model = XGBRFClassifier()
     model.load_model(relative_path)
     test = pd.DataFrame([model_parameters.dict()])
-    # class 0
-    #test = [[1, 144, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 0, 144, 0, 0.0, 0.0]]
-    # class 1
-    #test = [[29, 4118, 4.959919999999999, 4.959919999999999, 0.0, 4.959919999999999,4.959919999999999, 4.959919999999999, 29, 0, 4118, 0, 5.645251999999999, 0.0]]
-    # class 2
-    #test = [[24, 3696, 4.881948, 4.881948, 0.0, 4.881948, 4.881948,4.881948, 24, 0, 3696, 0, 4.711233999999999, 0.0]]
-    test2 = pd.DataFrame(test, columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
-                                        'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'SrcRate', 'DstRate'], dtype=float)
+    test2 = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
+                                        'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
     prediction = model.predict(test2)
     print(prediction)
     return {"class": prediction.tolist()}
