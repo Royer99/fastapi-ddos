@@ -1,14 +1,7 @@
-from matplotlib.pyplot import title
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report
 from xgboost import XGBRFClassifier
-from sklearn.metrics import accuracy_score
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
-from sklearn.preprocessing import StandardScaler
 import os
 
 app = FastAPI(title="DDos classifier",
