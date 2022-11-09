@@ -9,6 +9,7 @@ from sklearn.metrics import accuracy_score
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from sklearn.preprocessing import StandardScaler
+import os
 
 app = FastAPI(title="DDos classifier",
               description="DDos classifier", version="0.1")
@@ -44,9 +45,12 @@ async def root():
 
 @app.post("/classify")
 async def classify(model_parameters: ModelParameters):
+
+    absolute_path = os.path.dirname(__file__)
+    relative_path = "model/model_xgboost99.txt"
+    full_path = os.path.join(absolute_path, relative_path)
     model = XGBRFClassifier()
-    model.load_model(
-        "/home/royer/Documents/AD2022/ddosClassifier-api/model/model_xgboost99.txt")
+    model.load_model(relative_path)
     test = pd.DataFrame([model_parameters.dict()])
     # class 0
     #test = [[1, 144, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 0, 144, 0, 0.0, 0.0]]
