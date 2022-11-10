@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRFClassifier
 import os
 
@@ -55,8 +56,11 @@ async def classify(model_parameters: ModelParameters):
     params = model_parameters.dict()
     params.pop('model')
     test = pd.DataFrame([params])
-    test2 = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
-                                        'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
+    # normalize data
+    scaler = StandardScaler()
+    test = scaler.fit_transform(test.T)
+    test2 = pd.DataFrame(test.T, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
+                                          'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
     prediction = model.predict(test2)
     print(prediction)
     return {"class": prediction.tolist()}
