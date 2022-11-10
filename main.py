@@ -63,4 +63,4 @@ async def classify(model_parameters: ModelParameters):
                                           'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
     prediction = model.predict(test2)
     print(prediction)
-    return {"class": prediction.tolist()}
+    return {"class": prediction.tolist()[0]}

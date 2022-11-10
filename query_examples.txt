@@ -13,7 +13,7 @@
     "Max": 0.0,
     "Sum": 0.0,
     "Mean": 0.0,
-    "StdDev": 0.0
+    "StdDev": 0.0,
     "model": 3
 }
 {
