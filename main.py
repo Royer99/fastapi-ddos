@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRFClassifier
 import os
+import pickle
 
 app = FastAPI(title="DDos classifier",
               description="DDos classifier", version="0.1")
@@ -51,8 +52,9 @@ async def classify(model_parameters: ModelParameters):
         relative_path = "model/naiveB.txt"
 
     full_path = os.path.join(absolute_path, relative_path)
-    model = XGBRFClassifier()
-    model.load_model(relative_path)
+    #model = XGBRFClassifier()
+    # model.load_model(relative_path)
+    pickle.load(open(full_path, 'rb'))
     params = model_parameters.dict()
     params.pop('model')
     test = pd.DataFrame([params])
