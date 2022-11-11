@@ -44,25 +44,32 @@ async def root():
 async def classify(model_parameters: ModelParameters):
 
     absolute_path = os.path.dirname(__file__)
+
     if model_parameters.model == 1:
         relative_path = "model/model_xgboost98_semifinal"
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/naiveB.txt"
+        relative_path = "model/basic_rf.txt"
 
     full_path = os.path.join(absolute_path, relative_path)
-    #model = XGBRFClassifier()
-    # model.load_model(relative_path)
-    pickle.load(open(full_path, 'rb'))
+    model = pickle.load(
+        open(full_path, 'rb'))
+    # pickle.load(open(full_path, 'rb'))
     params = model_parameters.dict()
+    # print(params)
     params.pop('model')
+
     test = pd.DataFrame([params])
+    test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
+                                       'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
+    print(test)
+    test = test.reindex(columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
+                                 'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'Rate', 'SrcRate', 'DstRate'])
     # normalize data
-    scaler = StandardScaler()
-    test = scaler.fit_transform(test.T)
-    test2 = pd.DataFrame(test.T, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
-                                          'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
-    prediction = model.predict(test2)
+    # scaler = StandardScaler()
+    # test = scaler.fit_transform(test.T)
+    print(test)
+    prediction = model.predict(test)
     print(prediction)
     return {"class": prediction.tolist()[0]}

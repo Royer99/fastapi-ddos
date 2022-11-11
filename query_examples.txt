@@ -70,3 +70,40 @@
     "StdDev": 0.0,
     "model": 3
 }
+hping3 -s 
+{   
+    "Dur": 10815757.274627686,
+    "SrcBytes": 80,
+    "DstBytes": 0,
+    "TotBytes": 80,
+    "SrcPkts": 4,
+    "DstPkts": 0,
+    "TotPkts": 4,
+    "SrcRate": 0.36983078469997316,
+    "DstRate": 0.0,
+    "Rate": 0.36983078469997316,
+    "Min": 10.815757274627686,
+    "Max": 10.815757274627686,
+    "Sum": 10.815757274627686,
+    "Mean": 0,
+    "StdDev": 0,
+    "model": 3
+}
+1
+{
+    "Dur":4.9770650000000005,
+    "SrcBytes": 4402,
+    "DstBytes": 0,
+    "TotBytes": 4402,
+    "SrcPkts": 31,
+    "DstPkts": 0,
+    "TotPkts": 31,
+    "SrcRate": 6.027648999999999,
+    "DstRate": 0.0,
+    "Min": 4.9770650000000005,
+    "Max": 4.9770650000000005,
+    "Sum": 4.9770650000000005,
+    "Mean": 0,
+    "StdDev": 0,
+    "model": 3
+}
