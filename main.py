@@ -48,7 +48,7 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/basic_rf.txt"
+        relative_path = "model/naiveB.txt"
 
     full_path = os.path.join(absolute_path, relative_path)
     model = XGBRFClassifier()
