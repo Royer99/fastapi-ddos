@@ -44,7 +44,7 @@ async def classify(model_parameters: ModelParameters):
 
     absolute_path = os.path.dirname(__file__)
     if model_parameters.model == 1:
-        relative_path = "model/model_xgboost99.txt"
+        relative_path = "model/model_xgboost98_semifinal"
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
