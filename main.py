@@ -50,19 +50,21 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/naiveB.txt"
+        relative_path = "model/model_xgboost99_semifinal_rate_noscale.txt"
 
     full_path = os.path.join(absolute_path, relative_path)
-    model = pickle.load(
-        open(full_path, 'rb'))
-    # pickle.load(open(full_path, 'rb'))
+    #model = pickle.load(open(full_path, 'rb'))
+    #pickle.load(open(full_path, 'rb'))
+
+    model = XGBRFClassifier()
+    model.load_model(full_path)
     params = model_parameters.dict()
     # print(params)
     params.pop('model')
 
     test = pd.DataFrame([params])
     test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
-                                       'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'], dtype=float)
+                                       'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'])
     print(test)
     test = test.reindex(columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
                                  'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'Rate', 'SrcRate', 'DstRate'])
