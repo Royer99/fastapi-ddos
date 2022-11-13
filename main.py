@@ -52,7 +52,7 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/myIsolationForest.sav"
+        relative_path = "model/myIsolationForest_1.sav"
 
     full_path = os.path.join(absolute_path, relative_path)
     #model = pickle.load(open(full_path, 'rb'))
