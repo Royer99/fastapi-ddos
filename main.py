@@ -53,21 +53,22 @@ async def classify(model_parameters: ModelParameters):
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
         #relative_path = "model/myIsolationForest_1.sav"
-        relative_path = "model/model_xgboost99_semifinal_rate_noscale.txt"
+        relative_path = "model/myIsolationForest_2.sav"
 
     full_path = os.path.join(absolute_path, relative_path)
+    model = joblib.load(full_path)
     #model = pickle.load(open(full_path, 'rb'))
     #pickle.load(open(full_path, 'rb'))
-    model = XGBRFClassifier()
-    model.load_model(full_path)
+    #model = XGBRFClassifier()
+    # model.load_model(full_path)
 
     # model = joblib.load(full_path)
     params = model_parameters.dict()
     params.pop('model')
 
     # # normalize data
-    # scalerpath = "/home/royer/Documents/AD2022/fastapi-ddos/model/std_scaler.sav"
-    # scaler = joblib.load(scalerpath)
+    scalerpath = os.path.join(absolute_path, "model/scaler_isolation.sav")
+    scaler = joblib.load(scalerpath)
 
     test = pd.DataFrame(params, index=[0])
     test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
@@ -75,6 +76,7 @@ async def classify(model_parameters: ModelParameters):
     print(test)
     test = test.reindex(columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
                                  'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'Rate', 'SrcRate', 'DstRate'])
+    test = scaler.transform(test)
     print(test)
     prediction = model.predict(test)
     print(prediction)
