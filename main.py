@@ -52,14 +52,16 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/myIsolationForest_1.sav"
+        #relative_path = "model/myIsolationForest_1.sav"
+        relative_path = "model_xgboost99_semifinal_rate_noscale.txt"
 
     full_path = os.path.join(absolute_path, relative_path)
     #model = pickle.load(open(full_path, 'rb'))
     #pickle.load(open(full_path, 'rb'))
-    #model = XGBRFClassifier()
-    # model.load_model(full_path)
-    model = joblib.load(full_path)
+    model = XGBRFClassifier()
+    model.load_model(full_path)
+
+    # model = joblib.load(full_path)
     params = model_parameters.dict()
     params.pop('model')
 
