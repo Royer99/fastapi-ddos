@@ -7,8 +7,8 @@ import os
 import pickle
 from sklearn.model_selection import train_test_split
 import joblib
-import tensorflow as tf
-import keras
+#import tensorflow as tf
+#import keras
 import numpy as np
 
 app = FastAPI(title="DDos classifier",
@@ -55,12 +55,12 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        #relative_path = "model/myIsolationForest_1.sav"
-        relative_path = "model/gru84"
+        relative_path = "model/myIsolationForest_3.sav"
+        #relative_path = "model/gru84"
 
     full_path = os.path.join(absolute_path, relative_path)
-    #model = joblib.load(full_path)
-    model = keras.models.load_model(full_path)
+    model = joblib.load(full_path)
+    #model = keras.models.load_model(full_path)
 
     #model = pickle.load(open(full_path, 'rb'))
     #pickle.load(open(full_path, 'rb'))
@@ -72,8 +72,9 @@ async def classify(model_parameters: ModelParameters):
     params.pop('model')
 
     # # normalize data
-    #scalerpath = os.path.join(absolute_path, "model/scaler_isolation.sav")
-    #scaler = joblib.load(scalerpath)
+    scalerpath = os.path.join(
+        absolute_path, "model/scaler_inverse_isolation.sav")
+    scaler = joblib.load(scalerpath)
 
     test = pd.DataFrame(params, index=[0])
     test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
@@ -81,18 +82,18 @@ async def classify(model_parameters: ModelParameters):
     print(test)
     test = test.reindex(columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
                                  'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'Rate', 'SrcRate', 'DstRate'])
-    #test = scaler.transform(test)
+    test = scaler.transform(test)
     print(test)
     prediction = model.predict(test)
     print(prediction)
     result = (prediction)
     print(result)
     # print(np.argmax(result))
-    res = np.argmax(result)
-    if(res == 0):
-        res = 1
-    else:
-        res = -1
-    print(res)
-    return {"class": res}
-    # return {"class": prediction.tolist()[0]}
+    # res = np.argmax(result)
+    # if(res == 0):
+    #     res = 1
+    # else:
+    #     res = -1
+    # print(res)
+    # return {"class": res}
+    return {"class": prediction.tolist()[0]}
