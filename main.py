@@ -7,6 +7,9 @@ import os
 import pickle
 from sklearn.model_selection import train_test_split
 import joblib
+import tensorflow as tf
+import keras
+import numpy as np
 
 app = FastAPI(title="DDos classifier",
               description="DDos classifier", version="0.1")
@@ -53,10 +56,12 @@ async def classify(model_parameters: ModelParameters):
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
         #relative_path = "model/myIsolationForest_1.sav"
-        relative_path = "model/myIsolationForest_2.sav"
+        relative_path = "model/gru84"
 
     full_path = os.path.join(absolute_path, relative_path)
-    model = joblib.load(full_path)
+    #model = joblib.load(full_path)
+    model = keras.models.load_model(full_path)
+
     #model = pickle.load(open(full_path, 'rb'))
     #pickle.load(open(full_path, 'rb'))
     #model = XGBRFClassifier()
@@ -80,4 +85,9 @@ async def classify(model_parameters: ModelParameters):
     print(test)
     prediction = model.predict(test)
     print(prediction)
-    return {"class": prediction.tolist()[0]}
+    result = (prediction)
+    print(result)
+    print(np.argmax(result))
+    res = np.argmax(result)
+    return {"class": res.tolist()}
+    # return {"class": prediction.tolist()[0]}
