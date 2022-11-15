@@ -61,8 +61,8 @@ async def classify(model_parameters: ModelParameters):
 
     # model = pickle.load(open(full_path, 'rb'))
     # pickle.load(open(full_path, 'rb'))
-    # model = XGBRFClassifier()
-    # model.load_model(full_path)
+    model = XGBRFClassifier()
+    model.load_model(full_path)
 
     # model = joblib.load(full_path)
     params = model_parameters.dict()
