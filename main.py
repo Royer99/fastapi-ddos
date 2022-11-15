@@ -19,16 +19,13 @@ class ModelParameters(BaseModel):
     Dur: float
     SrcBytes: float
     DstBytes: float
-    TotBytes: float
     SrcPkts: float
     DstPkts: float
-    TotPkts: float
     SrcRate: float
     DstRate: float
     Rate: float
     Min: float
     Max: float
-    Sum: float
     Mean: float
     StdDev: float
     model: int
