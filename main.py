@@ -55,11 +55,11 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/myIsolationForest_3.sav"
+        relative_path = "model/xgboost_udp.sav"
         #relative_path = "model/gru84"
 
     full_path = os.path.join(absolute_path, relative_path)
-    model = joblib.load(full_path)
+    #model = joblib.load(full_path)
     #model = keras.models.load_model(full_path)
 
     #model = pickle.load(open(full_path, 'rb'))
@@ -73,15 +73,15 @@ async def classify(model_parameters: ModelParameters):
 
     # # normalize data
     scalerpath = os.path.join(
-        absolute_path, "model/scaler_inverse_isolation.sav")
+        absolute_path, "model/scaler_udp.sav")
     scaler = joblib.load(scalerpath)
 
     test = pd.DataFrame(params, index=[0])
-    test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'TotBytes', 'SrcPkts', 'DstPkts',
-                                       'TotPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Sum', 'Mean', 'StdDev'])
+    test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'SrcPkts',
+                                       'DstPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Mean', 'StdDev'])
     print(test)
-    test = test.reindex(columns=['TotPkts', 'TotBytes', 'Dur', 'Mean', 'StdDev', 'Sum', 'Min',
-                                 'Max', 'SrcPkts', 'DstPkts', 'SrcBytes', 'DstBytes', 'Rate', 'SrcRate', 'DstRate'])
+    test = test.reindex(columns=[" Flow Duration", " Fwd Header Length", " Bwd Header Length", " Total Fwd Packets", " Total Backward Packets",
+                                 "Fwd Packets/s", " Bwd Packets/s", " Flow Packets/s", " Flow IAT Max", " Flow IAT Min", " Flow IAT Mean", " Flow IAT Std", " Label"])
     test = scaler.transform(test)
     print(test)
     prediction = model.predict(test)

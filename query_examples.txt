@@ -90,3 +90,5 @@ hping3 -s
     "StdDev": 0,
     "model": 3
 }
+
+"Dur": 10437882.1849823, "SrcBytes": 60, "DstBytes": 0, "TotBytes": 60, "SrcPkts": 3, "DstPkts": 0, "TotPkts": 3, "SrcRate": 0.28741462557570413, "DstRate": 0.0, "Rate": 0.28741462557570413, "Min": 10.4378821849823, "Max": 10.4378821849823, "Sum": 10.4378821849823, "Mean": 5.21894109249115, "StdDev": 7.380697274227241, "model": 3
