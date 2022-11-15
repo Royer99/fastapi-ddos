@@ -74,10 +74,11 @@ async def classify(model_parameters: ModelParameters):
     scaler = joblib.load(scalerpath)
 
     test = pd.DataFrame(params, index=[0])
-    test = pd.DataFrame(test, columns=[" Flow Duration", " Fwd Header Length", " Bwd Header Length", " Total Fwd Packets", " Total Backward Packets",
-                                       "Fwd Packets/s", " Bwd Packets/s", " Flow Packets/s", " Flow IAT Max", " Flow IAT Min", " Flow IAT Mean", " Flow IAT Std"])
+    test = pd.DataFrame(test, columns=['Dur', 'SrcBytes', 'DstBytes', 'SrcPkts',
+                                       'DstPkts', 'SrcRate', 'DstRate', 'Rate', 'Min', 'Max', 'Mean', 'StdDev'])
     print(test)
-    #test = test.reindex(columns=[" Flow Duration", " Fwd Header Length", " Bwd Header Length", " Total Fwd Packets", " Total Backward Packets","Fwd Packets/s", " Bwd Packets/s", " Flow Packets/s", " Flow IAT Max", " Flow IAT Min", " Flow IAT Mean", " Flow IAT Std"])
+    test = test.rename(columns={"Dur": " Flow Duration", "SrcBytes": " Fwd Header Length", "DstBytes": " Bwd Header Length", "SrcPkts": " Total Fwd Packets", "DstPkts": " Total Backward Packets",
+                                "SrcRate": "Fwd Packets/s", "DstRate": " Bwd Packets/s", "Rate": " Flow Packets/s", "Max": " Flow IAT Max", "Min": " Flow IAT Min", "Mean": " Flow IAT Mean", "StdDev": " Flow IAT Std"})
     test = scaler.transform(test)
     print(test)
     prediction = model.predict(test)
