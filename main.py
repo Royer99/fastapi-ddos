@@ -52,7 +52,7 @@ async def classify(model_parameters: ModelParameters):
     elif model_parameters.model == 2:
         relative_path = "model/model_xgboost99_semifinal.txt"
     elif model_parameters.model == 3:
-        relative_path = "model/xgboost_udp.sav"
+        relative_path = "model/xgboost_bala_udp.sav"
         # relative_path = "model/gru84"
 
     full_path = os.path.join(absolute_path, relative_path)
@@ -70,7 +70,7 @@ async def classify(model_parameters: ModelParameters):
 
     # # normalize data
     scalerpath = os.path.join(
-        absolute_path, "model/scaler_udp.sav")
+        absolute_path, "model/scaler_bala_udp.sav")
     scaler = joblib.load(scalerpath)
 
     test = pd.DataFrame(params, index=[0])
